@@ -121,7 +121,7 @@ trait Searchable {
 		$cases = $this->getSearchableCases($search);
 		$sql   = implode(' + ', $cases['sql']);
 		$query = clone $builder;
-		$joins = array_get($this->searchable, 'joins', []);
+		$joins = Arr::get($this->searchable, 'joins', []);
 
 		foreach ($joins as $table => $keys) {
 			if (is_string($keys)) {
@@ -171,7 +171,7 @@ trait Searchable {
 	 * @return Builder
 	 */
 	protected function applySearchable(Builder $builder, Builder $query, $threshold) {
-		$columns   = array_sum(array_get($this->searchable, 'columns', []));
+		$columns   = array_sum(Arr::get($this->searchable, 'columns', []));
 		$threshold = (is_null($threshold)) ? ceil($columns / 5) : $threshold;
 		$bindings  = array_merge_recursive($query->getBindings(), $builder->getBindings());
 		$from      = $this->getSearchableFrom($query);
