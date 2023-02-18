@@ -1,5 +1,6 @@
 <?php
 namespace StudioNet\ScoreSearch\Grammars;
+use Illuminate\Support\Arr;
 
 /**
  * Get operator and binding from string
@@ -9,20 +10,6 @@ abstract class Grammar {
 	const BINDING      = '/^(\(.*\))?(\s+)?(?<binding>(.*))$/';
 	CONST AND_OPERATOR = 'AND';
 	const OR_OPERATOR  = 'OR';
-
-	
-	function array_flatten($array) {
-	    $return = array();
-	    foreach ($array as $key => $value) {
-		if (is_array($value)){
-		    $return = array_merge($return, $this->array_flatten($value));
-		} else {
-		    $return[$key] = $value;
-		}
-	    }
-
-	    return $return;
-	}
 	
 	/**
 	 * Return SQL operator for given string operator
@@ -105,7 +92,7 @@ abstract class Grammar {
 
 		return [
 			'sql'      => implode(" {$operator} ", $expressions),
-			'bindings' => $this->array_flatten($bindings)
+			'bindings' => Arr::flatten($bindings)
 		];
 	}
 
