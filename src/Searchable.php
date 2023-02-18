@@ -1,5 +1,6 @@
 <?php
 namespace StudioNet\ScoreSearch;
+use Illuminate\Support\Arr;
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -98,7 +99,7 @@ trait Searchable {
 	 * @return int
 	 */
 	protected function getSearchableWeight($key) {
-		$columns = array_get($this->searchable, 'columns', []);
+		$columns = Arr::get($this->searchable, 'columns', []);
 		$weight  = 1;
 
 		if (array_key_exists($key, $columns)) {
