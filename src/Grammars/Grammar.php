@@ -10,6 +10,20 @@ abstract class Grammar {
 	CONST AND_OPERATOR = 'AND';
 	const OR_OPERATOR  = 'OR';
 
+	
+	function array_flatten($array) {
+	    $return = array();
+	    foreach ($array as $key => $value) {
+		if (is_array($value)){
+		    $return = array_merge($return, $this->array_flatten($value));
+		} else {
+		    $return[$key] = $value;
+		}
+	    }
+
+	    return $return;
+	}
+	
 	/**
 	 * Return SQL operator for given string operator
 	 *
@@ -91,7 +105,7 @@ abstract class Grammar {
 
 		return [
 			'sql'      => implode(" {$operator} ", $expressions),
-			'bindings' => array_flatten($bindings)
+			'bindings' => $this->array_flatten($bindings)
 		];
 	}
 
