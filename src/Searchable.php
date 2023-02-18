@@ -142,7 +142,7 @@ trait Searchable {
 		}
 
 		return $query
-			->setBindings(array_flatten($cases['bindings']))
+			->setBindings(Arr::flatten($cases['bindings']))
 			->addSelect(
 				$this->getConnection()->raw(sprintf('%s.*', $this->getTable())),
 				$this->getConnection()->raw(sprintf('(%s) as score', $sql))
